@@ -14,11 +14,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "vue": "^2.5.2",
-    "vue-router": "^3.0.1",
-    "express": "^4.16.4",
     "dotenv": "^6.2.0",
-    "mysql": "^2.16.0"
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "vue": "^2.5.2",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
