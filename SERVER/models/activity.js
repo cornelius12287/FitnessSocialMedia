@@ -9,13 +9,32 @@ const model = {
             cb(err, data);
         })
     },
-    get(id, cb){},
+    get(id, cb){
+        conn.query("SELECT * FROM MyApp_Activities WHERE Id=?", id, (err, data) => {
+            cb(err, data[0]);
+        });
+    },
+
     add(input, cb){
+        if(!input.Password){
+            cb(Error('Password Required'));
+            return;
+        }
+        if(input.Password < 8){
+            cb(Error('A Longer Password is Required'));
+            return;
+        }
         conn.query("INSERT INTO MyApp_Activities (Type,Group,Motion,Sets,Reps,Current,created_at) VALUES (?)",
-                    [[input.Type, input.Group, input.Motion, input.Sets, input.Reps, input.Current, new Date()]],
+                    [[input.FirstName, input.LastName, input.Birthday, input.Password, new Date()]],
                     (err, data) => {
-                        cb(err, data);
-                    })
+                        if(err){
+                            cb(err);
+                            return;
+                        }
+                        model.get(data.insertId, (err, data) => {
+                            cb(err, data);
+                        })
+                    });
     }
 };
 

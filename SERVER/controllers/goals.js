@@ -15,12 +15,24 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/", (req, res) => {
-    goal.add({Type: "Weights", Group: "Arms", Motion: "BicepCurls", Sets: "5", Reps: "5", Achieved: "Y"}, (err, data) => {
+app.get("/:id", (req, res) => {
+
+    goal.get(req.params.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
+
+//goal.add({Type: "Weights", Group: "Arms", Motion: "BicepCurls", Sets: "5", Reps: "5", Achieved: "Y"}, (err, data) => {
+app.post("/", (req, res) => {
+    console.log(req.body);
+    goal.add(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
+
 
 // return value
 module.exports = app;

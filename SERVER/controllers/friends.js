@@ -15,12 +15,23 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/", (req, res) => {
-    friend.add({FirstName: "Arnold", LastName: "Schwarzenegger", FriendsSince: "2-26-19"}, (err, data) => {
+app.get("/:id", (req, res) => {
+
+    friend.get(req.params.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
+
+//friend.add({FirstName: "Arnold", LastName: "Schwarzenegger", FriendsSince: "2-26-19"}, (err, data) => {
+app.post("/", (req, res) => {
+    console.log(req.body);
+    friend.add(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
 
 // return value
 module.exports = app;

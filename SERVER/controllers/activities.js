@@ -15,12 +15,23 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/", (req, res) => {
-    activity.add({Type: "Weights", Group: "Arms", Motion: "BicepCurls", Sets: "5", Reps: "5", Current: "Y"}, (err, data) => {
+app.get("/:id", (req, res) => {
+
+    activity.get(req.params.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
+
+//activity.add({Type: "Weights", Group: "Arms", Motion: "BicepCurls", Sets: "5", Reps: "5", Current: "Y"}, (err, data) => {
+app.post("/", (req, res) => {
+    console.log(req.body);
+    activity.add(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
 
 // return value
 module.exports = app;
