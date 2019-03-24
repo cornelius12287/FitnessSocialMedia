@@ -5,12 +5,12 @@ const conn = require('./mysql_connection')
 // each method takes a cb callback parameter for asynchronous programming
 const model = {
     getAll(cb){
-        conn.query("SELECT * FROM MyApp_Activities", (err, data) => {
+        conn.query("SELECT * FROM MyApp_Updates", (err, data) => {
             cb(err, data);
         })
     },
     get(id, cb){
-        conn.query("SELECT * FROM MyApp_Activities WHERE Id=?", id, (err, data) => {
+        conn.query("SELECT * FROM MyApp_Updates WHERE Id=?", id, (err, data) => {
             cb(err, data[0]);
         });
     },
@@ -24,8 +24,8 @@ const model = {
             cb(Error('A Longer Password is Required'));
             return;
         }
-        conn.query("INSERT INTO MyApp_Activities (Type,Motion,Sets,Reps,Current,created_at) VALUES (?)",
-                    [[input.Type, input.Motion, input.Sets, input.Reps, input.Current, new Date()]],
+        conn.query("INSERT INTO MyApp_Updates (UpdateID,Type,Motion,Sets,Reps,UpdateText,created_at) VALUES (?)",
+                    [[input.UpdateID, input.Type, input.Motion, input.Sets, input.Reps, input.UpdateText, new Date()]],
                     (err, data) => {
                         if(err){
                             cb(err);

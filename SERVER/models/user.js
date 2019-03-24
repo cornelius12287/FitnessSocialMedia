@@ -24,8 +24,8 @@ const model = {
             cb(Error('A Longer Password is Required'));
             return;
         }
-        conn.query("INSERT INTO MyApp_Users (FirstName,LastName,Birthday,Password,created_at) VALUES (?)",
-                    [[input.FirstName, input.LastName, input.Birthday, input.Password, new Date()]],
+        conn.query("INSERT INTO MyApp_Users (FirstName,LastName,UserID,Birthday,Password,created_at) VALUES (?)",
+                    [[input.FirstName, input.LastName, input.id, input.Birthday, input.Password, new Date()]],
                     (err, data) => {
                         if(err){
                             cb(err);
