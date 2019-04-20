@@ -9,28 +9,22 @@ const app = express.Router();
 // get action/method/request
 // this method used instead of sequelize from video
 // controller does not know about sequel; model does not know about express
-app.get("/", (req, res) => {
-    comment.getAll((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/", async (req, res, next) => {
+    comment.getAll()
+    .then(x=> res.send(x))
+    .catch(next)
 });
 
-app.get("/:id", (req, res) => {
-
-    comment.get(req.params.id, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/:id", (req, res, next) => {
+    comment.get(req.params.id)
+    .then(x=> res.send(x))
+    .catch(next)
 });
 
-//user.add({FirstName: "Steve", LastName: "Irwin"}, (err, data) => {
-app.post("/", (req, res) => {
-    console.log(req.body);
-    comment.add(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/", (req, res, next) => {
+    comment.add(req.body)
+    .then(x=> res.send(x))
+    .catch(next)
 });
 
 // return value

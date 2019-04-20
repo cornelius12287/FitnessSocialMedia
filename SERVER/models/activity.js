@@ -4,37 +4,33 @@ const conn = require('./mysql_connection')
 // model JSON object
 // each method takes a cb callback parameter for asynchronous programming
 const model = {
-    getAll(cb){
-        conn.query("SELECT * FROM MyApp_Activities", (err, data) => {
-            cb(err, data);
-        })
-    },
-    get(id, cb){
-        conn.query("SELECT * FROM MyApp_Activities WHERE Id=?", id, (err, data) => {
-            cb(err, data[0]);
-        });
+    async getAll(){
+        return await conn.query("SELECT * FROM MyApp_Activities");
     },
 
-    add(input, cb){
+    async get(id){
+        const data = await conn.query("SELECT * FROM MyApp_Activities WHERE id=?", id);
+        if(!data){
+            throw Error('Activity Not Found');
+        }
+        return data[0];
+    },
+
+    async add(input){
         if(!input.Password){
-            cb(Error('Password Required'));
-            return;
+            throw Error('Password Required');
         }
-        if(input.Password < 8){
-            cb(Error('A Longer Password is Required'));
-            return;
+        if(input.Password.length < 8){
+            throw Error('A Longer Password is Required');
         }
-        conn.query("INSERT INTO MyApp_Activities (Type,Motion,Sets,Reps,Current,created_at) VALUES (?)",
-                    [[input.Type, input.Motion, input.Sets, input.Reps, input.Current, new Date()]],
-                    (err, data) => {
-                        if(err){
-                            cb(err);
-                            return;
-                        }
-                        model.get(data.insertId, (err, data) => {
-                            cb(err, data);
-                        })
-                    });
+        const data = await conn.query("INSERT INTO MyApp_Activities (Type,Motion,Sets,Reps,Current,created_at) VALUES (?)",
+                    [[input.Type, input.Motion, input.Sets, input.Reps, input.Current, new Date()]]
+        );
+        return await model.get(data.insertId);
+    },
+
+    getFromToken(token){
+        return jwt.verify(token, JWT_SECRET);
     }
 };
 
