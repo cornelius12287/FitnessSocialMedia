@@ -33,6 +33,12 @@ app.post("/login", (req, res, next) => {
     .catch(next)
 });
 
+app.post("/facebookLogin", (req, res, next) => {
+    user.facebookLogin(req.body.token,  req.body.fbid)
+    .then(x=> res.send(x))
+    .catch(next)
+});
+
 app.post("/changePassword", (req, res, next) => {
     user.changePassword(req.body.email, req.body.oldPassword, req.body.newPassword)
     .then(x=> res.send(x))

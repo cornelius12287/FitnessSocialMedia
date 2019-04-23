@@ -6,6 +6,8 @@ const SALT_ROUNDS = 8;
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || 'some long string here';
 
+const axios = require('axios');
+
 // model JSON object
 // each method takes a cb callback parameter for asynchronous programming
 const model = {
@@ -39,6 +41,7 @@ const model = {
         return jwt.verify(token, JWT_SECRET);
     },
 
+    //REGULAR LOGIN
     async login(email, password){
         const data = await conn.query(`SELECT * FROM MyApp_Users P Join MyApp_ContactMethods CM On CM.UserId = P.id WHERE CM.Value=?`, email);
         if(data.length == 0){
@@ -46,11 +49,26 @@ const model = {
         }
         const x = await bcrypt.compare(password, data[0].password);
         if(x){
-            const user = {...data[0], password: null};
+            const user = {...data[0], Password: null};
             return {user, token: jwt.sign(user, JWT_SECRET)};
         }else{
             throw Error('Wrong Password');
         }
+    },
+
+    //FACEBOOK LOGIN
+    async facebookLogin(token, fbid){
+        const fbme = await axios.get(`https://graph.facebook.com/me?fields=id,name,email&access_token=${token}`);
+        console.log({fbme});
+        const data = await conn.query(`SELECT * FROM Spring2019_Persons P Join
+            Spring2019_ContactMethods CM On CM.Person_Id = P.id
+            WHERE CM.Type='Facebook' AND CM.Value=?`, fbme.data.id);
+        if (data.length == 0){
+            //insert statement that creates a new user with data from fbme, instead of error below
+            throw Error('User Not Found');
+        }
+        const user = {...data[0], Password: null};
+        return {user, token: jwt.sign(user, JWT_SECRET)};
     },
 
     async changePassword(email, oldPassword, newPassword){
