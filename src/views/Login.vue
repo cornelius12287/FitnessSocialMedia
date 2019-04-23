@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import { Register } from '@/models/users';
-import { Globals } from '@/models/api';
-import * as fb from '@/models/facebook';
+import { Globals } from "@/models/api";
+import { Login } from "@/models/users";
+import * as fb from "@/models/facebook";
 import toastr from 'toastr';
 
 export default {

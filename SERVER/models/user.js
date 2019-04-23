@@ -32,7 +32,7 @@ const model = {
         }
         const hashedPassword = await bcrypt.hash(input.Password, SALT_ROUNDS)
         const data = await conn.query("INSER INTO MyApp_Users (FirstName,LastName,Birthday,Password,created_at) VALUES (?)",
-        [[inout.FirstName, input.LastName, input.Birthday, hashedPassword, new Date()]]
+        [[input.FirstName, input.LastName, input.Birthday, hashedPassword, new Date()]]
         );
         return await model.get(data.insertId);
     },

@@ -34,7 +34,7 @@ app.post("/login", (req, res, next) => {
 });
 
 app.post("/facebookLogin", (req, res, next) => {
-    user.facebookLogin(req.body.token,  req.body.fbid)
+    user.facebookLogin(req.body.token, req.body.fbid)
     .then(x=> res.send(x))
     .catch(next)
 });
