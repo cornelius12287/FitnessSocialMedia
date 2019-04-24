@@ -59,8 +59,8 @@ export default {
     methods: {
         async submit(){
           try{
-            const m = await Login(this.data);
-            this.$router.push(Globals.redirectRoute);
+            await Login(this.data);
+            this.$router.push(Globals.redirectRoute)
             toastr.success("You've logged in successfully!");
           }
           catch(error){

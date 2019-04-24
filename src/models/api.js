@@ -4,17 +4,13 @@ export const Globals = {
     user: null,
     errors: [],
     deleteError(i){
-        this.errors.splice(i,1);
+        this.errors.splice(i, 1);
     }
-}
-
-export function login(){
-    Globals.user = {name: "Bernie"};
 }
 
 export async function api(url, data){
     let response = null;
-    let headers = { "Authorization": `Bearer ${Globals.token}`}
+    let headers = { "Authorization": `Bearer ${Globals.token}` }
     if(!data){
         response = await fetch(API_ROOT + url, { headers });
     }else{
@@ -26,7 +22,7 @@ export async function api(url, data){
                 ...headers, 
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         })
     }
     if(!response.ok){

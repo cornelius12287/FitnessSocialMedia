@@ -1,14 +1,15 @@
-const express = require("express");
-const path = require("path");
+const express = require('express');
+const path = require('path');
 
-const activities = require("./controllers/activities");
-const comments = require("./controllers/comments");
-const friends = require("./controllers/friends");
-const goals = require("./controllers/goals");
-const likes = require("./controllers/likes");
-const updates = require("./controllers/updates");
-const users = require("./controllers/users");
-//add others controllers HERE for all tables
+const activities = require('./controllers/activities');
+const comments = require('./controllers/comments');
+const friends = require('./controllers/friends');
+const goals = require('./controllers/goals');
+const likes = require('./controllers/likes');
+const updates = require('./controllers/updates');
+const users = require('./controllers/users');
+
+const userModel = require('./models/user');
 
 const app = express();
 const port = 3000;
@@ -28,9 +29,8 @@ app.use(function(req, res, next){
     try {
         const token = (req.headers.authorization || "").split(' ')[1];
         req.user = userModel.getFromToken(token);
-    }
-    catch (error) {
-        const openActions = ['POST/users', 'POST/users/login', 'POST/users/facebookLogin', 'GET/myfriends', 'GET/register', 'GET/login', 'GET/about']
+    } catch (error) {
+        const openActions = ['POST/users', 'POST/users/login', 'POST/users/facebookLogin', 'GET/login', 'GET/myfriends']
         if(req.method != "OPTIONS" && !openActions.includes(req.method + req.path.toLowerCase())){
             next(Error("Login Required"));
         }

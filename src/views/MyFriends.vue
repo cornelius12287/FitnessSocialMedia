@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h1 v-if="Globals.user">{{Globals.user.name}}'s Friends Page</h1>
+    <h1 v-if="Globals.user">{{Globals.user.name}}'s Friends</h1>
     <ul>
         <li v-for="friend in friends" :key="friend.id">
             {{friend.FirstName}} {{friend.LastName}}
@@ -13,7 +13,7 @@
 <script>
 
 import {Globals} from "@/models/api";
-import {GetFriends} from "@/models/users";
+import {GetFriends} from "@/models/users.js";
 
 export default {
     data(){

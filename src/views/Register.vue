@@ -56,8 +56,8 @@
 </template>
 
 <script>
-import { Globals } from '@/models/api';
-import { Register } from '@/models/users';
+import { Globals } from "@/models/api";
+import { Register } from "@/models/users";
 import toastr from 'toastr';
 
 export default {
@@ -72,7 +72,7 @@ export default {
             this.newUser = m;
             toastr.success("You've registered successfully!");
           }
-          catch(error){
+          catch (error) {
             Globals.errors.push(error);
             toastr.error(error.message);
           }

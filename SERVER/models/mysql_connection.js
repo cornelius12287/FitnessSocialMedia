@@ -1,5 +1,5 @@
-const mysql =   require("mysql");
-                require("dotenv").load();
+const mysql =   require('mysql');
+                require('dotenv').load();
                 
 const util = require('util');
 
