@@ -17,12 +17,6 @@ const model = {
     },
 
     async add(input){
-        if(!input.Password){
-            throw Error('Password Required');
-        }
-        if(input.Password.length < 8){
-            throw Error('A Longer Password is Required');
-        }
         const data = await conn.query("INSERT INTO MyApp_Activities (Type,Motion,Sets,Reps,Current,created_at) VALUES (?)",
                     [[input.Type, input.Motion, input.Sets, input.Reps, input.Current, new Date()]]
         );

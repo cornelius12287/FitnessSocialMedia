@@ -9,7 +9,7 @@ const conn = mysql.createPool({
     password: process.env.MYSQL_PASS,
     database: process.env.MYSQL_DB,
     connectionLimit: 10,
-    insecureAuth: true
+    //insecureAuth: true
 });
 
 conn.query = util.promisify(conn.query);

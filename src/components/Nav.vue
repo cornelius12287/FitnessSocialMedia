@@ -44,13 +44,10 @@
 import { Globals } from "@/models/api";
 
 export default {
-    // data takes a function that returns data
     data:()=>({
         Globals: Globals
     }),
-    // methods takes an object that contain functins
     methods: {
-
         }
     }
 </script>

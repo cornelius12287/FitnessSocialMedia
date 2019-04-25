@@ -10,6 +10,9 @@ import {Globals} from '@/models/api';
 
 Vue.use(Router);
 
+function gaurd(to, from, next){
+}
+
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -48,13 +51,13 @@ const router = new Router({
       path: '/Login',
       name: 'login',
       component: Login,
-    },
-  ],
+    }
+  ]
 });
 
 router.beforeEach((to, from, next) => {
   console.log({ to, from });
-  const publicRoutes = ['home', 'login', 'register'];
+  const publicRoutes = ['home', 'login', 'register', 'myfriends'];
   if(!publicRoutes.includes(to.name) && !Globals.user){
     Globals.redirectRoute = { name: to.name, path: to.path, params: to.params, query: to.query, hash: to.hash }
     return next('login');

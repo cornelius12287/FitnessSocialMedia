@@ -17,16 +17,14 @@ const model = {
     },
 
     async add(input){
-        if(!input.Password){
-            throw Error('Password Required');
-        }
-        if(input.Password.length < 8){
-            throw Error('A Longer Password is Required');
-        }
         const data = await conn.query("INSERT INTO MyApp_Goals (Type,Motion,Sets,Reps,Achieved,created_at) VALUES (?)",
             [[input.Type, input.Motion, input.Sets, input.Reps, input.Achieved, new Date()]],
         );
         return await model.get(data.insertId);
+    },
+
+    async met(input){
+        return await conn.query("DELETE from MyApp_Goals where id=?", input);
     },
 
     getFromToken(token){

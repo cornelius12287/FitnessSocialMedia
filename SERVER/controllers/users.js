@@ -1,14 +1,8 @@
-// one controller file for each table in database
-
 const express = require('express');
 const user = require('../models/user');
-//const conn = require('../models/mysql_connection');
 
 const app = express.Router();
 
-// get action/method/request
-// this method used instead of sequelize from video
-// controller does not know about sequel; model does not know about express
 app.get("/", async (req, res, next) => {
     user.getAll()
     .then(x=> res.send(x))
@@ -28,13 +22,13 @@ app.post("/", (req, res, next) => {
 });
 
 app.post("/login", (req, res, next) => {
-    user.login(req.body.email, req.body.Password)
+    user.login(req.body.email, req.body.password)
     .then(x=> res.send(x))
     .catch(next)
 });
 
 app.post("/facebookLogin", (req, res, next) => {
-    user.facebookLogin(req.body.token, req.body.fbid)
+    user.facebookLogin(req.body.token)
     .then(x=> res.send(x))
     .catch(next)
 });

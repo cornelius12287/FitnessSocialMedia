@@ -12,13 +12,13 @@ const axios = require('axios');
 // each method takes a cb callback parameter for asynchronous programming
 const model = {
     async getAll(){
-        return await conn.query("SELECT * FROM MyApp_Users")
+        return await conn.query("SELECT * FROM MyApp_Users");
     },
 
     async get(id){
         const data = await conn.query("SELECT * FROM MyApp_Users WHERE id=?", id);
         if(!data){
-            throw Error('User Not Found');
+            throw Error("User Not Found");
         }
         return data[0];
     },
@@ -31,7 +31,7 @@ const model = {
             throw Error('A Longer Password Is Required');
         }
         const hashedPassword = await bcrypt.hash(input.Password, SALT_ROUNDS)
-        const data = await conn.query("INSER INTO MyApp_Users (FirstName,LastName,Birthday,Password,created_at) VALUES (?)",
+        const data = await conn.query("INSERT INTO MyApp_Users (FirstName,LastName,Birthday,Password,created_at) VALUES (?)",
         [[input.FirstName, input.LastName, input.Birthday, hashedPassword, new Date()]]
         );
         return await model.get(data.insertId);
@@ -47,7 +47,7 @@ const model = {
         if(data.length == 0){
             throw Error('User Not Found');
         }
-        const x = await bcrypt.compare(password, data[0].password);
+        const x = await bcrypt.compare(password, data[0].Password);
         if(x){
             const user = {...data[0], Password: null};
             return {user, token: jwt.sign(user, JWT_SECRET)};
@@ -57,7 +57,7 @@ const model = {
     },
 
     //FACEBOOK LOGIN
-    async facebookLogin(token, fbid){
+    async facebookLogin(token){
         const fbme = await axios.get(`https://graph.facebook.com/me?fields=id,name,email&access_token=${token}`);
         console.log({fbme});
         const data = await conn.query(`SELECT * FROM Spring2019_Persons P Join
@@ -68,7 +68,7 @@ const model = {
             throw Error('User Not Found');
         }
         const user = {...data[0], Password: null};
-        return {user, token: jwt.sign(user, JWT_SECRET)};
+        return {user, token: jwt.sign(user, JWT_SECRET), oAuthUser: fbMe.data };
     },
 
     async changePassword(email, oldPassword, newPassword){
@@ -79,7 +79,7 @@ const model = {
         if(data[0].Password == "" || await bcrypt.compare(oldPassword, data[0].password)){
             const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
             await conn.query(`Update MyApp_Users P Set ? WHERE P.id=?`, [ {Password: hashedPassword}, data[0].id]);
-            return { status: "success", message: "Passowrd Successfully Changed" };
+            return { status: "success", message: "Password Successfully Changed" };
         }else{
             throw Error('Wrong Password');
         }

@@ -5,7 +5,40 @@ export async function GetFriends(){
     return x;
 };
 
-export const GetFriends2 = () => api("users");
+export async function GetActivities(){
+    const x = await api("activities")
+    return x;
+};
+
+export async function AddActivity(data){
+    const x = await api("activities", data)
+    return x;
+};
+
+export async function GetGoals(){
+    const x = await api("goals")
+    return x;
+};
+
+export async function AddGoal(data){
+    const x = await api("goals", data)
+    return x;
+};
+
+export async function MetGoal(data){
+    const x = await api("goals/met", data)
+    return x;
+};
+
+export async function GetUpdates(){
+    const x = await api("updates")
+    return x;
+};
+
+export async function AddUpdate(data){
+    const x = await api("updates", data)
+    return x;
+};
 
 export async function Register(data){
     const x = await api("users", data)
@@ -19,7 +52,7 @@ export async function Login(data){
     return x
 };
 
-export async function oAuthLogin(token, fbid){
+export async function oAuthLogin(token){
     const x = await api("users/facebookLogin", { token })
     Globals.user = x.user;
     Globals.token = x.token;
