@@ -18,9 +18,8 @@ export async function api(url, data){
             method: "POST",
             cache: "no-cache",
             headers: {
-                //spread operator: takes all properties in headers variable and copies into headers json object
-                ...headers, 
-                "Content-Type": "application/json"
+                ...headers,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
         })

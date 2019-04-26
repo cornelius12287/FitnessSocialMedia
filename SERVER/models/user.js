@@ -30,10 +30,10 @@ const model = {
         if(input.Password.length < 8){
             throw Error('A Longer Password Is Required');
         }
-        const hashedPassword = await bcrypt.hash(input.Password, SALT_ROUNDS)
+        const hashedPassword = await bcrypt.hash(input.Password, SALT_ROUNDS);
+        //const data = await conn.query(`INSERT INTO MyApp_Users (FirstName, LastName, Birthday, Password, created_at) VALUES ('${input.FirstName}', '${input.LastName}', '${input.Birthday}', '${hashedPassword}', ${new Date()})`);
         const data = await conn.query("INSERT INTO MyApp_Users (FirstName,LastName,Birthday,Password,created_at) VALUES (?)",
-        [[input.FirstName, input.LastName, input.Birthday, hashedPassword, new Date()]]
-        );
+            [[input.FirstName, input.LastName, input.Birthday, hashedPassword, new Date()]]);
         return await model.get(data.insertId);
     },
 
@@ -43,11 +43,15 @@ const model = {
 
     //REGULAR LOGIN
     async login(email, password){
-        const data = await conn.query(`SELECT * FROM MyApp_Users P Join MyApp_ContactMethods CM On CM.UserId = P.id WHERE CM.Value=?`, email);
+        console.log({password});
+        //const data = await conn.query(`SELECT * FROM MyApp_Users P Join MyApp_ContactMethods CM On CM.UserId = P.id WHERE CM.Value=?`, email);
+        const data = await conn.query("SELECT * FROM MyApp_Users");
         if(data.length == 0){
             throw Error('User Not Found');
         }
+        console.log(data[0].Password);
         const x = await bcrypt.compare(password, data[0].Password);
+        console.log({x});
         if(x){
             const user = {...data[0], Password: null};
             return {user, token: jwt.sign(user, JWT_SECRET)};
@@ -60,8 +64,8 @@ const model = {
     async facebookLogin(token){
         const fbme = await axios.get(`https://graph.facebook.com/me?fields=id,name,email&access_token=${token}`);
         console.log({fbme});
-        const data = await conn.query(`SELECT * FROM Spring2019_Persons P Join
-            Spring2019_ContactMethods CM On CM.Person_Id = P.id
+        const data = await conn.query(`SELECT * FROM MyApp_Users P Join
+            MyApp_ContactMethods CM On CM.UserId = P.id
             WHERE CM.Type='Facebook' AND CM.Value=?`, fbme.data.id);
         if (data.length == 0){
             //insert statement that creates a new user with data from fbme, instead of error below

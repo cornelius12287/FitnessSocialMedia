@@ -35,7 +35,7 @@
         </form>
         <span class="navbar-text" v-if="Globals.user">
             <img width="30" :src="`https://graph.facebook.com/${Globals.oAuthId}/picture`" />
-            Welcome {{Globals.user.FirstName}}{{Globals.user.LastName}}</span>
+            Welcome {{Globals.user.FirstName}} {{Globals.user.LastName}}</span>
         </div>
     </nav>
 </template>

@@ -30,7 +30,7 @@ app.use(function(req, res, next){
         const token = (req.headers.authorization || "").split(' ')[1];
         req.user = userModel.getFromToken(token);
     } catch (error) {
-        const openActions = ['POST/users', 'POST/users/login', 'POST/users/facebookLogin', 'GET/login', 'GET/myfriends']
+        const openActions = ['POST/users', 'POST/users/login', 'POST/users/facebooklogin', 'GET/login', 'GET/myfriends']
         if(req.method != "OPTIONS" && !openActions.includes(req.method + req.path.toLowerCase())){
             next(Error("Login Required"));
         }
