@@ -33,7 +33,7 @@ window.fbAsyncInit = function() {
        return new Promise( (resolve, reject) => {
            FB.login(function(response) {
                console.log(response);
-               if (response.status == "connected"){
+               if (response.status === "connected"){
                    FB.api("me?fields=id,name,email", response2 => {
                     oAuthLogin(response.authResponse.accessToken, response2.id)
                     .then(x=> resolve({ x, response2 }))

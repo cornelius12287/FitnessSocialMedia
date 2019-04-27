@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-header">
         <div>
-            <h4 class="card-title">v-if="Globals.user">{{Globals.user.name}}'s Updates</h4>
+            <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Updates</h4>
             <ul>
                 <li v-for="update in updates" :key="update.id">
                     {{update.created_at}}: {{update.Test}}

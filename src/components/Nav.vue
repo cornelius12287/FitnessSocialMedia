@@ -34,7 +34,7 @@
             <router-link to="/Register" class="nav-link">SIGN UP</router-link>
         </form>
         <span class="navbar-text" v-if="Globals.user">
-            <img width="30" :src="`https://graph.facebook.com/${Globals.oAuthId}/picture`" />
+            <img width="30" :src="`https://graph.facebook.com/${Globals.oAuthId}/picture`" onerror="../assets/logo.png"/>
             Welcome {{Globals.user.FirstName}} {{Globals.user.LastName}}</span>
         </div>
     </nav>

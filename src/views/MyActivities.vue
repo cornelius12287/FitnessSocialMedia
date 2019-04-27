@@ -3,7 +3,7 @@
 <div class="card">
     <div class="card-header">
         <div>
-            <h4 class="card-title">v-if="Globals.user">{{Globals.user.name}}'s Activities</h4>
+            <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Activities</h4>
             <ul>
                 <li v-for="activity in activities" :key="activity.id">
                     {{activity.Type}} > {{activity.Motion}}: {{activity.Sets}} sets x {{activity.Reps}} reps

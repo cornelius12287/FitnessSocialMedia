@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import MyFriends from './views/MyFriends.vue';
 import MyActivities from './views/MyActivities.vue';
 import MyGoals from './views/MyGoals.vue';
+import MyUpdates from './views/MyUpdates.vue';
 import Register from './views/Register.vue';
 import Login from './views/Login.vue';
 import {Globals} from '@/models/api';
@@ -43,6 +44,11 @@ const router = new Router({
       component: MyGoals,
     },
     {
+      path: '/MyUpdates',
+      name: 'myupdates',
+      component: MyUpdates,
+    },
+    {
       path: '/Register',
       name: 'register',
       component: Register,
@@ -57,7 +63,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   console.log({ to, from });
-  const publicRoutes = ['home', 'login', 'register', 'myfriends'];
+  const publicRoutes = ['home', 'login', 'register'];
   if(!publicRoutes.includes(to.name) && !Globals.user){
     Globals.redirectRoute = { name: to.name, path: to.path, params: to.params, query: to.query, hash: to.hash }
     return next('login');

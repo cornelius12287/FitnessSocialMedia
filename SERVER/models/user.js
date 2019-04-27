@@ -30,10 +30,14 @@ const model = {
         if(input.Password.length < 8){
             throw Error('A Longer Password Is Required');
         }
+        const data2 = await conn.query(`SELECT * FROM MyApp_Users WHERE Email=?`, [[input.email]]);
+        if(data2.length != 0){
+            throw Error('A user already exists for that email');
+        }
         const hashedPassword = await bcrypt.hash(input.Password, SALT_ROUNDS);
-        //const data = await conn.query(`INSERT INTO MyApp_Users (FirstName, LastName, Birthday, Password, created_at) VALUES ('${input.FirstName}', '${input.LastName}', '${input.Birthday}', '${hashedPassword}', ${new Date()})`);
-        const data = await conn.query("INSERT INTO MyApp_Users (FirstName,LastName,Birthday,Password,created_at) VALUES (?)",
-            [[input.FirstName, input.LastName, input.Birthday, hashedPassword, new Date()]]);
+        const data = await conn.query(
+            "INSERT INTO MyApp_Users (FirstName,LastName,Birthday,Email,Password,created_at) VALUES (?)",
+            [[input.FirstName, input.LastName, input.Birthday, input.Email, hashedPassword, new Date()]]);
         return await model.get(data.insertId);
     },
 
@@ -43,15 +47,14 @@ const model = {
 
     //REGULAR LOGIN
     async login(email, password){
-        console.log({password});
-        //const data = await conn.query(`SELECT * FROM MyApp_Users P Join MyApp_ContactMethods CM On CM.UserId = P.id WHERE CM.Value=?`, email);
-        const data = await conn.query("SELECT * FROM MyApp_Users");
+        if(!password){
+            throw Error('Password Required for Login');
+        }
+        const data = await conn.query(`SELECT * FROM MyApp_Users WHERE Email=?`, [[email]]);
         if(data.length == 0){
             throw Error('User Not Found');
         }
-        console.log(data[0].Password);
         const x = await bcrypt.compare(password, data[0].Password);
-        console.log({x});
         if(x){
             const user = {...data[0], Password: null};
             return {user, token: jwt.sign(user, JWT_SECRET)};

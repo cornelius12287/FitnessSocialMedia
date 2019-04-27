@@ -3,7 +3,7 @@
 <div class="card">
     <div class="card-header">
         <div>
-            <h4 class="card-title">v-if="Globals.user">{{Globals.user.name}}'s Goals</h4>
+            <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Goals</h4>
             <ul>
                 <li v-for="goal in goals" :key="goal.id">
                     {{goal.Type}} > {{goal.Motion}}: {{goal.Sets}} sets x {{goal.Reps}} reps  |  Achieved? {{goal.Achieved}}    
