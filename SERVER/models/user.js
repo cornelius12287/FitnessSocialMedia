@@ -55,8 +55,10 @@ const model = {
             throw Error('User Not Found');
         }
         const x = await bcrypt.compare(password, data[0].Password);
+        const n = data[0].FirstName;
+        const i = data[0].id;
         if(x){
-            const user = {...data[0], Password: null};
+            const user = {...data[0], Password: null, name: n, UserId: i};
             return {user, token: jwt.sign(user, JWT_SECRET)};
         }else{
             throw Error('Wrong Password');

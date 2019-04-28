@@ -51,7 +51,8 @@ app.use("/updates", updates);
 app.use("/users", users);
 
 //CATCH ALL FOR DEEP LINKING: no matter what is asked for, return dist index.html
-app.get("*", (req, res)=> res.sendFile(path.join(__dirname, "../dist.index.html")));
+//app.get("*", (req, res)=> res.sendFile(path.join(__dirname, "../dist.index.html")));
+app.get("*", (req, res)=> res.sendFile(path.join(__dirname, "../src/views/About.vue")));
 
 //ERROR HANDLING
 app.use(function (err, req, res, next){

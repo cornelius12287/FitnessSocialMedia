@@ -11,7 +11,7 @@ import {Globals} from '@/models/api';
 
 Vue.use(Router);
 
-function gaurd(to, from, next){
+function guard(to, from, next){
 }
 
 const router = new Router({

@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-header">
         <div>
-            <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Updates</h4>
+            <h4 v-if="Globals.user">{{Globals.user.name}}'s Updates</h4>
             <ul>
                 <li v-for="update in updates" :key="update.id">
                     {{update.created_at}}: {{update.Test}}
@@ -30,14 +30,14 @@
 
 import {Globals} from "@/models/api";
 import {GetUpdates, AddUpdate} from "@/models/users.js";
+import toastr from 'toastr';
 
 export default {
-    data(){
-        return {
-            Globals: Globals,
-            updates: []
-        }
-    },
+    data: ()=> ({
+        data: {},
+        Globals: Globals,
+        updates: []
+    }),
     async mounted(){
         this.updates = await GetUpdates();
     },

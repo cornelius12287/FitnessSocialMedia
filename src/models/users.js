@@ -10,13 +10,22 @@ export async function GetActivities(){
     return x;
 };
 
+//export async function GetActivities(data){
+//    const x = await api("activities/:id", id=data)
+//    return x;
+//};
+
 export async function AddActivity(data){
     const x = await api("activities", data)
     return x;
 };
 
 export async function GetGoals(){
-    const x = await api("goals")
+    //const a = "data";
+    //const b = Globals.user.UserId;
+    //const c = a+b;
+    //const x = await api(c);
+    const x = await api("goals");
     return x;
 };
 
@@ -42,14 +51,14 @@ export async function AddUpdate(data){
 
 export async function Register(data){
     const x = await api("users", data)
-    return x
+    return x;
 };
 
 export async function Login(data){
     const x = await api("users/login", data)
     Globals.user = x.user;
     Globals.token = x.token;
-    return x
+    return x;
 };
 
 export async function oAuthLogin(token){
@@ -57,5 +66,5 @@ export async function oAuthLogin(token){
     Globals.user = x.user;
     Globals.token = x.token;
     Globals.oAuthUser = x.oAuthUser;
-    return x
+    return x;
 };

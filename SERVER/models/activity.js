@@ -9,7 +9,7 @@ const model = {
     },
 
     async get(id){
-        const data = await conn.query("SELECT * FROM MyApp_Activities WHERE id=?", id);
+        const data = await conn.query("SELECT * FROM MyApp_Activities WHERE UserId=?", id);
         if(!data){
             throw Error('Activity Not Found');
         }
@@ -17,9 +17,9 @@ const model = {
     },
 
     async add(input){
-        const data = await conn.query("INSERT INTO MyApp_Activities (Type,Motion,Sets,Reps,Current,created_at) VALUES (?)",
-                    [[input.Type, input.Motion, input.Sets, input.Reps, input.Current, new Date()]]
-        );
+        const data = await conn.query(
+            "INSERT INTO MyApp_Activities (Category,Motion,Sets,Reps,UserId,created_at) VALUES (?)", 
+            [[input.Category, input.Motion, input.Sets, input.Reps, input.UserId, new Date()]] );
         return await model.get(data.insertId);
     },
 
