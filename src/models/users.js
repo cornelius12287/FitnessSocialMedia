@@ -6,26 +6,28 @@ export async function GetFriends(){
 };
 
 export async function GetActivities(){
-    const x = await api("activities")
+    const a = "activities/";
+    const b = Globals.user.UserId;
+    const c = (a + b);
+    const x = await api(c);
     return x;
 };
-
-//export async function GetActivities(data){
-//    const x = await api("activities/:id", id=data)
-//    return x;
-//};
 
 export async function AddActivity(data){
     const x = await api("activities", data)
     return x;
 };
 
+export async function RemoveActivity(data){
+    const x = await api("activities/remove", data)
+    return x;
+};
+
 export async function GetGoals(){
-    //const a = "data";
-    //const b = Globals.user.UserId;
-    //const c = a+b;
-    //const x = await api(c);
-    const x = await api("goals");
+    const a = "goals/";
+    const b = Globals.user.UserId;
+    const c = (a + b);
+    const x = await api(c);
     return x;
 };
 
@@ -39,8 +41,16 @@ export async function MetGoal(data){
     return x;
 };
 
+export async function RemoveGoal(data){
+    const x = await api("goals/remove", data)
+    return x;
+};
+
 export async function GetUpdates(){
-    const x = await api("updates")
+    const a = "updates/";
+    const b = Globals.user.UserId;
+    const c = (a + b);
+    const x = await api(c);
     return x;
 };
 

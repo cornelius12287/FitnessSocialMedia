@@ -1,13 +1,8 @@
-// one controller file for each table in database
-
 const express = require('express');
 const goal = require('../models/goal');
 
 const app = express.Router();
 
-// get action/method/request
-// this method used instead of sequelize from video
-// controller does not know about sequel; model does not know about express
 app.get("/", async (req, res, next) => {
     goal.getAll()
     .then(x=> res.send(x))
@@ -28,6 +23,12 @@ app.post("/", (req, res, next) => {
 
 app.post("/met", (req, res, next) => {
     goal.met(req.body)
+    .then(x=> res.send(x))
+    .catch(next)
+});
+
+app.post("/remove", (req, res, next) => {
+    goal.remove(req.body)
     .then(x=> res.send(x))
     .catch(next)
 });

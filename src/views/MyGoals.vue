@@ -1,11 +1,15 @@
 <template>
 <div class="card">
     <div class="card-header">
-            <h4 v-if="Globals.user">{{Globals.user.name}}'s Goals</h4>
+            <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Goals</h4>
             <ul>
-                <!--:key="goal.id"-->
-                <li v-for="goal in goals">
-                    {{goal.Category}} > {{goal.Motion}}: {{goal.Sets}} sets x {{goal.Reps}} reps  |  Achieved? {{goal.Achieved}}  <button class="btn btn-primary btn-block" @click.prevent="metGoal">Goal Achieved</button>
+                <li v-for="goal in goals" :key="goal.id">
+                    {{goal.Category}}:  {{goal.Motion}}  -  {{goal.Sets}},  {{goal.Reps}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type ="submit" width="150px" class="btn btn-danger" @click.prevent="removeGoal(goal)">Remove</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type ="submit" width="150px" class="btn btn-success" @click.prevent="metGoal(goal)">Achieve</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Achieved?&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img v-if="goal.Achieved==1" src="../assets/check.png" height="20px">
+                    <br><br>
                 </li>
             </ul>
     </div>
@@ -23,21 +27,20 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="Motion">Motion</label>
+                    <label for="Motion">Action</label>
                     <input type="text" v-model="data.Motion"
-                      class="form-control" name="Motion" id="Motion" aria-describedby= "HelpMotion" placeholder="Motion">
-                    <small id= "HelpMotion" class="form-text text-muted">i.e. Run 1km, Curl 30 lbs, Squats 100 lbs, Crunches, etc.</small>
+                      class="form-control" name="Motion" id="Motion" aria-describedby= "HelpMotion" placeholder="i.e. Run 1km, Curl 30 lbs, Smoothie for breakfast, etc.">
                   </div>
                   <div class="form-group">
-                    <label for="Sets">Sets</label>
+                    <label for="Sets">Frequency/Sets</label>
                     <input type="text" v-model="data.Sets"
-                      class="form-control" name="Sets" id="Sets" aria-describedby= "HelpSets" placeholder="Sets">
+                      class="form-control" name="Sets" id="Sets" aria-describedby= "HelpSets" placeholder="ex: 5 for sets, 1 for daily, etc.">
                     <small id= "HelpSets" class="form-text text-muted">Please enter a numeric value</small>
                   </div>
                   <div class="form-group">
-                    <label for="Reps">Reps</label>
+                    <label for="Reps">Time/Reps</label>
                     <input type="text" v-model="data.Reps"
-                      class="form-control" name="Reps" id="Reps" aria-describedby= "HelpReps" placeholder="Reps">
+                      class="form-control" name="Reps" id="Reps" aria-describedby= "HelpReps" placeholder="ex: 5 for reps, 30 for seconds">
                     <small id= "HelpReps" class="form-text text-muted">Please enter a numeric value</small>
                   </div>
                   <button type="submit" class="btn btn-success">Add Goal</button>
@@ -50,7 +53,7 @@
 <script>
 
 import {Globals} from "@/models/api";
-import {GetGoals, AddGoal, MetGoal} from "@/models/users.js";
+import {GetGoals, AddGoal, MetGoal, RemoveGoal} from "@/models/users.js";
 import toastr from 'toastr';
 
 export default {
@@ -75,11 +78,22 @@ export default {
             toastr.error(error.message);
           }
         },
-        async metGoal(){
+        async metGoal(input){
             try{
-              console.log("ERROR HERE");
-                const m = await MetGoal(this.data.id);
-                toastr.success("Great Job on Reaching Your Goal!");
+              this.data.id = input.id;
+              const m = await MetGoal(this.data);
+              toastr.success("Great Job on Reaching Your Goal!");
+            }
+            catch (error) {
+                Globals.errors.push(error);
+                toastr.error(error.message);
+            }
+        },
+        async removeGoal(input){
+            try{
+              this.data.id = input.id;
+              const m = await RemoveGoal(this.data);
+              toastr.success("Do or Do Not. There is no Try.");
             }
             catch (error) {
                 Globals.errors.push(error);

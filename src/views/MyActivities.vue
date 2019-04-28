@@ -4,7 +4,8 @@
           <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Activities</h4>
           <ul>
               <li v-for="activity in activities" :key="activity.id">
-                  {{activity.Category}} > {{activity.Motion}}: {{activity.Sets}} sets x {{activity.Reps}} reps
+                  {{activity.Category}}:  {{activity.Motion}}  -  {{activity.Sets}}, {{activity.Reps}}&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button type ="submit" width="150px" class="btn btn-danger" @click.prevent="removeAct(activity)">Remove</button>
               </li>
           </ul>
       </div>
@@ -22,21 +23,20 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="Motion">Motion</label>
+                    <label for="Motion">Action</label>
                     <input type="text" v-model="data.Motion"
-                      class="form-control" name="Motion" id="Motion" aria-describedby= "HelpMotion" placeholder="Motion">
-                    <small id= "HelpMotion" class="form-text text-muted">i.e. Run 1km, Curl 30 lbs, Squats 100 lbs, Crunches, etc.</small>
+                      class="form-control" name="Motion" id="Motion" aria-describedby= "HelpMotion" placeholder="ex: Run 1km, Curl 30 lbs, Smoothie for breakfast, etc.">
                   </div>
                   <div class="form-group">
-                    <label for="Sets">Sets</label>
+                    <label for="Sets">Frequency/Sets</label>
                     <input type="text" v-model="data.Sets"
-                      class="form-control" name="Sets" id="Sets" aria-describedby= "HelpSets" placeholder="Sets">
+                      class="form-control" name="Sets" id="Sets" aria-describedby= "HelpSets" placeholder="ex: 5 for sets, 1 for daily, etc.">
                     <small id= "HelpSets" class="form-text text-muted">Please enter a numeric value</small>
                   </div>
                   <div class="form-group">
-                    <label for="Reps">Reps</label>
+                    <label for="Reps">Time/Reps</label>
                     <input type="text" v-model="data.Reps"
-                      class="form-control" name="Reps" id="Reps" aria-describedby= "HelpReps" placeholder="Reps">
+                      class="form-control" name="Reps" id="Reps" aria-describedby= "HelpReps" placeholder="ex: 5 for reps, 30 for seconds">
                     <small id= "HelpReps" class="form-text text-muted">Please enter a numeric value</small>
                   </div>
                   <button type="submit" class="btn btn-success">Add Activity</button>
@@ -50,18 +50,16 @@
 <script>
 
 import {Globals} from "@/models/api";
-import {GetActivities, AddActivity} from "@/models/users.js";
+import {GetActivities, AddActivity, RemoveActivity} from "@/models/users.js";
 import toastr from 'toastr';
 
 export default {
-    //data(){return{Globals: Globals,activities:[]}},
     data: ()=> ({
       data: {},
       Globals: Globals,
-      friends: []
+      activities: []
     }),
     async mounted(){
-        //const i = Globals.user.UserId;
         this.activities = await GetActivities();
     },
     methods: {
@@ -76,6 +74,17 @@ export default {
             Globals.errors.push(error);
             toastr.error(error.message);
           }
+        },
+        async removeAct(input){
+            try{
+              this.data.id = input.id;
+                const m = await RemoveActivity(this.data);
+                toastr.success("Activity Removed. Try Something Else.");
+            }
+            catch (error) {
+                Globals.errors.push(error);
+                toastr.error(error.message);
+            }
         }
     }
 

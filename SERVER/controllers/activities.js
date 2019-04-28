@@ -26,5 +26,11 @@ app.post("/", (req, res, next) => {
     .catch(next)
 });
 
+app.post("/remove", (req, res, next) => {
+    activity.remove(req.body)
+    .then(x=> res.send(x))
+    .catch(next)
+});
+
 // return value
 module.exports = app;

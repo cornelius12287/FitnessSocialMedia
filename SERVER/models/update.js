@@ -9,16 +9,17 @@ const model = {
     },
 
     async get(id){
-        const data = await conn.query("SELECT * FROM MyApp_Updates WHERE id=?", id);
+        const data = await conn.query("SELECT * FROM MyApp_Updates WHERE UserId=?", id);
         if(!data){
             throw Error('Update Not Found');
         }
-        return data[0];
+        //return data[0];
+        return data;
     },
 
     async add(input){
-        const data = await conn.query("INSERT INTO MyApp_Updates (UpdateID,Type,Motion,Sets,Reps,UpdateText,created_at) VALUES (?)",
-            [[input.UpdateID, input.Type, input.Motion, input.Sets, input.Reps, input.UpdateText, new Date()]],
+        const data = await conn.query("INSERT INTO MyApp_Updates (UpdateText,FirstName,LastName,UserId,created_at) VALUES (?)",
+            [[input.UpdateText, input.FirstName, input.LastName, input.UserId, new Date()]],
         );
         return await model.get(data.insertId);
     },

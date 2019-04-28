@@ -20,13 +20,13 @@
                     <router-link class="nav-link" to="/MyUpdates" active-class="active" exact>Updates</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/MyFriends" active-class="active" exact>Friends</router-link>
-                </li>
-                <li class="nav-item">
                     <router-link class="nav-link" to="/MyActivities" active-class="active" exact>Activities</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link class="nav-link" to="/MyGoals" active-class="active" exact>Goals</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/MyFriends" active-class="active" exact>Friends</router-link>
                 </li>
             </ul>
         <form class="form-inline mt-2 mt-md-0" v-if="!Globals.user">

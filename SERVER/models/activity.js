@@ -13,13 +13,20 @@ const model = {
         if(!data){
             throw Error('Activity Not Found');
         }
-        return data[0];
+        //return data[0];
+        return data;
     },
 
     async add(input){
         const data = await conn.query(
             "INSERT INTO MyApp_Activities (Category,Motion,Sets,Reps,UserId,created_at) VALUES (?)", 
             [[input.Category, input.Motion, input.Sets, input.Reps, input.UserId, new Date()]] );
+        return await model.get(data.insertId);
+    },
+
+    async remove(input){
+        const data = await conn.query(
+            "DELETE FROM MyApp_Activities WHERE id=?", input.id);
         return await model.get(data.insertId);
     },
 

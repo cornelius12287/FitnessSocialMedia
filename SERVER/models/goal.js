@@ -13,7 +13,8 @@ const model = {
         if(!data){
             throw Error('Goal Not Found');
         }
-        return data[0];
+        //return data[0];
+        return data;
     },
 
     async add(input){
@@ -24,7 +25,13 @@ const model = {
     },
 
     async met(input){
-        return await conn.query("UPDATE MyApp_Goals SET Achieved='true' WHERE id=?", input);
+        return await conn.query("UPDATE MyApp_Goals SET Achieved=1 WHERE id=?", input.id);
+    },
+
+    async remove(input){
+        const data = await conn.query(
+            "DELETE FROM MyApp_Goals WHERE id=?", input.id);
+        return await model.get(data.insertId);
     },
 
     getFromToken(token){
