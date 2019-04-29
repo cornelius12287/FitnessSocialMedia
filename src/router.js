@@ -7,12 +7,12 @@ import MyGoals from './views/MyGoals.vue';
 import MyUpdates from './views/MyUpdates.vue';
 import Register from './views/Register.vue';
 import Login from './views/Login.vue';
+import AboutUser from './views/AboutUser.vue';
 import {Globals} from '@/models/api';
 
 Vue.use(Router);
 
-function guard(to, from, next){
-}
+function guard(to, from, next){}
 
 const router = new Router({
   mode: 'history',
@@ -24,9 +24,19 @@ const router = new Router({
       component: Home,
     },
     {
+      path: '/logout',
+      name: 'logout',
+      component: Home,
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+    },
+    {
+      path: '/AboutUser',
+      name: 'aboutuser',
+      component: AboutUser,
     },
     {
       path: '/MyFriends',
@@ -62,7 +72,6 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log({ to, from });
   const publicRoutes = ['home', 'login', 'register'];
   if(!publicRoutes.includes(to.name) && !Globals.user){
     Globals.redirectRoute = { name: to.name, path: to.path, params: to.params, query: to.query, hash: to.hash }

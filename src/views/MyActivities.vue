@@ -2,16 +2,19 @@
     <div class="card">
       <div class="card-header">
           <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Activities</h4>
+      </div>
+      <div class="card-body">
           <ul>
               <li v-for="activity in activities" :key="activity.id">
                   {{activity.Category}}:  {{activity.Motion}}  -  {{activity.Sets}}, {{activity.Reps}}&nbsp;&nbsp;&nbsp;&nbsp;
-                  <button type ="submit" width="150px" class="btn btn-danger" @click.prevent="removeAct(activity)">Remove</button>
+                  <button type ="submit" width="150px" class="btn btn-danger" @click.prevent="removeAct(activity)">Remove</button><br><br>
               </li>
           </ul>
       </div>
-      <div class="card-body">
+      <div class="card-header">
         <h4 class="card-title">Add New Activity</h4>
-        <p class="card-text">
+      </div>
+      <div class="card-body">
           <form @submit.prevent="submit" id="NewActivity">
                   <div class="form-group">
                     <label for="Category">Category<br></label>

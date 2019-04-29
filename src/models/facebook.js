@@ -22,9 +22,8 @@ window.fbAsyncInit = function() {
      //below script calls FBasync
      js.src = "https://connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
-   }
+   }(document, 'script', 'facebook-jssdk'));
    //function immediately called
-   (document, 'script', 'facebook-jssdk'));
 
 
 //FB login function

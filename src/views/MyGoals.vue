@@ -2,20 +2,22 @@
 <div class="card">
     <div class="card-header">
             <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Goals</h4>
+    </div>
+    <div class="card-body">
             <ul>
                 <li v-for="goal in goals" :key="goal.id">
                     {{goal.Category}}:  {{goal.Motion}}  -  {{goal.Sets}},  {{goal.Reps}}&nbsp;&nbsp;&nbsp;&nbsp;
                         <button type ="submit" width="150px" class="btn btn-danger" @click.prevent="removeGoal(goal)">Remove</button>&nbsp;&nbsp;&nbsp;&nbsp;
                         <button type ="submit" width="150px" class="btn btn-success" @click.prevent="metGoal(goal)">Achieve</button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Achieved?&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img v-if="goal.Achieved==1" src="../assets/check.png" height="20px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<img v-if="goal.Achieved==1" src="../assets/check.png" height="20px">
                     <br><br>
                 </li>
             </ul>
     </div>
-      <div class="card-body">
+      <div class="card-header">
         <h4 class="card-title">Add A New Goal</h4>
-        <p class="card-text">
+      </div>
+      <div class="card-body">
             <form @submit.prevent="submit" id="NewGoal">
                   <div class="form-group">
                     <label for="Category">Category<br></label>

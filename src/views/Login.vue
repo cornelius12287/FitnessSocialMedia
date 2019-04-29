@@ -18,16 +18,15 @@
                   <label for="email">Email</label>
                   <input type="text" v-model="data.email"
                     class="form-control" name="Email" id="Email" aria-describedby= "HelpEmail" placeholder="Email">
-                  <small id= "HelpEmail" class="form-text text-muted">You can use any email that you've used on our site.</small>
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
                   <input type="password" v-model="data.password"
                     class="form-control" name="Password" id="Password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-success">Login</button>
-            </form>
-            <br /><button class="btn btn-primary btn-block" @click.prevent="facebookLogin">Log In with Facebook</button>
+                </div><br>
+                <button type="submit" class="btn btn-success">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            </form><br>
+            <!--<button class="btn btn-info" @click.prevent="facebookLogin">Log In with Facebook</button>-->
       </div>
 
       <div class="col-lg-6">
@@ -71,7 +70,6 @@ export default {
 
         async facebookLogin(){
           const m = await fb.Login();
-          console.log( {m} );
         }
     }
 }

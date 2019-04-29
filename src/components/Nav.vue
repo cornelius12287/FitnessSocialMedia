@@ -11,11 +11,9 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="/" active-class="active" exact>Home<span class="sr-only">(current)</span></router-link>
                 </li>
-                <!--
                 <li class="nav-item">
                     <router-link class="nav-link" to="/About" active-class="active" exact>About</router-link>
                 </li>
-                -->
                 <li class="nav-item">
                     <router-link class="nav-link" to="/MyUpdates" active-class="active" exact>Updates</router-link>
                 </li>
@@ -28,13 +26,18 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="/MyFriends" active-class="active" exact>Friends</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/logout" active-class="active" exact>
+                    <span v-on:click="LogOut()">Log Out</span></router-link>
+                </li>
             </ul>
         <form class="form-inline mt-2 mt-md-0" v-if="!Globals.user">
             <router-link to="/Login" class="nav-link">LOGIN</router-link>
             <router-link to="/Register" class="nav-link">SIGN UP</router-link>
         </form>
         <span class="navbar-text" v-if="Globals.user">
-            <img width="30" :src="`https://graph.facebook.com/${Globals.oAuthId}/picture`" onerror="../assets/logo.png"/>
+            <img v-if="Globals.oAuthId" width="30" :src="`https://graph.facebook.com/${Globals.oAuthId}/picture`"/>&nbsp;&nbsp;
+            <img v-if="!Globals.oAuthId" width="30" src="../assets/logo.png"/>&nbsp;&nbsp;
             Welcome {{Globals.user.FirstName}} {{Globals.user.LastName}}</span>
         </div>
     </nav>
@@ -48,6 +51,10 @@ export default {
         Globals: Globals
     }),
     methods: {
+        LogOut(){
+            Globals.user = null;
+            Globals.friend = null;
+        },
         }
     }
 </script>

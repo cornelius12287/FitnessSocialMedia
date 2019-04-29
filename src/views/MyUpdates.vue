@@ -2,6 +2,8 @@
     <div class="card">
       <div class="card-header">
           <h4 class="card-title" v-if="Globals.user">{{Globals.user.name}}'s Updates</h4>
+      </div>
+      <div class="card-body">
           <ul>
               <li v-for="update in updates" :key="update.id">
                   <small>{{update.FirstName}} {{update.LastName}} wrote at {{update.created_at}}:</small>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -11,9 +13,10 @@
           </ul>
     </div>
 
-      <div class="card-body">
+      <div class="card-header">
         <h4 class="card-title">Add An Update</h4>
-        <p class="card-text">
+      </div>
+      <div class="card-body">
             <form @submit.prevent="submit">
                 <div class="form-group">
                   <input type="text" v-model="data.UpdateText"

@@ -50,7 +50,7 @@ const model = {
         if(!password){
             throw Error('Password Required for Login');
         }
-        const data = await conn.query(`SELECT * FROM MyApp_Users WHERE Email=?`, [[email]]);
+        const data = await conn.query("SELECT * FROM MyApp_Users WHERE Email=?", [[email]]);
         if(data.length == 0){
             throw Error('User Not Found');
         }
