@@ -15,6 +15,16 @@ app.get("/:id", (req, res, next) => {
     .catch(next)
 });
 
+
+
+app.get("/auto/:id", (req, res, next) => {
+    friend.getAuto(req.params.id)
+    .then(x=> res.send(x))
+    .catch(next)
+});
+
+
+
 app.post("/", (req, res, next) => {
     friend.add(req.body)
     .then(x=> res.send(x))

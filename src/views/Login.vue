@@ -70,7 +70,7 @@ export default {
 
         async facebookLogin(){
           const m = await fb.Login();
-        }
+        },
     }
 }
 </script>

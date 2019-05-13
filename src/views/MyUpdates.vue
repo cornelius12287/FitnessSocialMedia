@@ -51,6 +51,7 @@ export default {
             this.data.FirstName = Globals.user.FirstName;
             this.data.LastName = Globals.user.LastName;
             const m = await AddUpdate(this.data);
+            console.log(m);
             toastr.success("Goal Successfully Added! Thanks for sharing.");
           }
           catch (error) {

@@ -12,6 +12,25 @@
           </ul>
     </div>
 
+
+
+    <div class="card-header">
+        <h4 class="card-title">Search by Email</h4>
+    </div>
+    <div class="card-body">
+        <form @submit.prevent="showEmail">
+            <div class="form-group">
+                <input type="text" v-model="data.SearchEmail"
+                  class="form-control" name="SearchEmail" id="SearchEmail" aria-describedby= "HelpSearchEmail"
+                  placeholder="Search by Email">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+        </form>
+    </div>
+
+
+
+
     <div class="card-header">
         <h4 class="card-title">Add a Friend</h4>
     </div>
@@ -36,6 +55,14 @@
 import {Globals} from "@/models/api";
 import {GetFriends, AddFriend, SetFriend} from "@/models/users.js";
 import toastr from 'toastr';
+
+
+import { getEmail } from "@/models/users";
+/* VUE SELECT
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+*/
+
 
 export default {
     data: ()=> ({
@@ -62,6 +89,10 @@ export default {
         async setFriend(input){
             this.data = input;
             const m = await SetFriend(this.data);
+        },
+        async showEmail(input){
+            const m = await getEmail(this.data.SearchEmail);
+            //document.write(m);
         },
     }
 }

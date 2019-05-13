@@ -1,7 +1,16 @@
 import { api, Globals } from "./api";
 
-// FRIENDS
+export async function getEmail(data){
+    const a = "friends/auto/";
+    const b = data;
+    const c = (a + b);
+    const x = await api(c);
+    console.log(x);
+    return x;
+};
 
+
+// FRIENDS
 export async function GetFriends(){
     const a = "friends/";
     const b = Globals.user.UserId;

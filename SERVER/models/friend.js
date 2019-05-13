@@ -13,6 +13,14 @@ const model = {
         return data;
     },
 
+
+
+    async getAuto(id){
+        return await conn.query("SELECT * FROM MyApp_Users WHERE Email LIKE CONCAT('%',?,'%')", id);
+    },
+
+    
+
     async add(input){
         const data = await conn.query("SELECT * FROM MyApp_Users WHERE (FirstName,LastName)=(?)",
         [[input.FriendFirst, input.FriendLast]]);
